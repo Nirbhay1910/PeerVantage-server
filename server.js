@@ -20,6 +20,9 @@ io.on('connection', (socket) => {
   socket.on('join-room', (roomId, userId) => {
     socket.join(roomId);
     socket.to(roomId).emit('user-connected', userId);
+    socket.on('start-quiz', (ques) => {
+      io.to(roomId).emit('quiz-started', ques);
+    });
     socket.on('disconnect', () => {
       socket.to(roomId).emit('user-disconnected', userId);
     });
